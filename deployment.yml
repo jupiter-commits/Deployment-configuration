@@ -1,0 +1,56 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  pre_tasks:
+
+  - name: update packages (ubuntu)
+    tags: update, ubuntu
+    ansible.builtin.apt:
+      update_cache: true
+      upgrade: safe
+    when: ansible_facts['ansible_os_family'] == "Debian"
+
+  - name: update packages (rocky)
+    tags: update, rocky
+    ansible.builtin.dnf:
+      update_cache: true
+      update_only: yes
+    when: ansible_facts['ansible_os_family'] == "RedHat"
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+# distribution independent
+    - name: update packages and install postgres 
+      tags: ubuntu, rocky, postgres, db
+      ansible.builtin.package:
+        name:
+          - "{{ postgres_package }}"
+          - x
+        state: latest
+        update_cache: yes
+      when: ansible_pkg_mgr = "yum"
+
+
+- hosts: rdp
+  become: true
+  tasks:
+
+  - name: enable rdp service
+    tags: ubuntu, rdp
+    service:
+      name: 
+      state: started
+      enabled: true
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install docker
+    package:
+      name: docker
+      state: latest
