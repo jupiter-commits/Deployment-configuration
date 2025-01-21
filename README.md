@@ -7,3 +7,8 @@ To run playbooks:
 ``` yaml
 ansible-playbook --tags ubuntu --ask-become-pass deployment.yml
 ```
+
+**To Do**:
+1. Complete missing plays for different machines
+2. Split into roles to make it modular
+3. Automate instances provisioning
