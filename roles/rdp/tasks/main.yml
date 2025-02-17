@@ -1,0 +1,6 @@
+- name: enable rdp service
+  tags: ubuntu, rdp
+  service:
+    name: anydesk
+    state: started
+    enabled: true

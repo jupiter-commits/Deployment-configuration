@@ -19,37 +19,26 @@
     when: ansible_facts['ansible_os_family'] == "RedHat"
 
 
+- hosts: all
+  become: true
+  roles:
+    - base
+
+
 - hosts: db_servers
   become: true
-  tasks:
-
-# distribution independent
-    - name: update packages and install postgres 
-      tags: ubuntu, rocky, postgres, db
-      ansible.builtin.package:
-        name:
-          - "{{ postgres_package }}"
-          - x
-        state: latest
-        update_cache: yes
+  roles:
+    - db_servers
 
 
 - hosts: rdp
   become: true
-  tasks:
+  roles:
+    - rdp
 
-  - name: enable rdp service
-    tags: ubuntu, rdp
-    service:
-      name: 
-      state: started
-      enabled: true
 
 - hosts: web_servers
   become: true
-  tasks:
+  roles:
+    - web_servers
 
-  - name: install docker
-    package:
-      name: docker
-      state: latest

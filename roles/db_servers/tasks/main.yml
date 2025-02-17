@@ -1,0 +1,8 @@
+# distribution independent
+- name: update packages and install postgres
+  tags: ubuntu, rocky, postgres, db
+  ansible.builtin.package:
+    name:
+      - "{{ postgres_package }}"
+    state: latest
+    update_cache: yes
