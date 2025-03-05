@@ -12,3 +12,6 @@ ansible-playbook --tags ubuntu --ask-become-pass deployment.yml
 - [x] Split into roles to make it modular
 - [ ] Complete missing plays for different machines
 - [ ] Automate instances provisioning
+
+**Additional note**:
+To make creating roles easier check my [roles script](https://github.com/jupiter-commits/Tiny-scripts?tab=readme-ov-file#rolessh-script)
