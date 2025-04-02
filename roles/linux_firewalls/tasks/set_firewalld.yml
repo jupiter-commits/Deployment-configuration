@@ -1,0 +1,4 @@
+- name: make sure firewalld is installed
+  package:
+    name: firewalld
+    state: latest
