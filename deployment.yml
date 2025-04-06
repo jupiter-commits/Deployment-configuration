@@ -5,14 +5,18 @@
   pre_tasks:
 
   - name: update packages (ubuntu)
-    tags: update, ubuntu
+    tags:
+    - update
+    - ubuntu
     ansible.builtin.apt:
       update_cache: true
       upgrade: safe
     when: ansible_facts['os_family'] == "Debian"
 
   - name: update packages (rocky)
-    tags: update, rocky
+    tags:
+    - update
+    - rocky
     ansible.builtin.dnf:
       update_cache: true
       update_only: yes
