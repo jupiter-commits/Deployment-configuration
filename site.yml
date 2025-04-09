@@ -1,0 +1,47 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  pre_tasks:
+
+  - name: update packages (ubuntu)
+    tags:
+    - update
+    - ubuntu
+    ansible.builtin.apt:
+      update_cache: true
+      upgrade: safe
+    when: ansible_facts['os_family'] == "Debian"
+
+  - name: update packages (rocky)
+    tags:
+    - update
+    - rocky
+    ansible.builtin.dnf:
+      update_cache: true
+      update_only: yes
+    when: ansible_facts['os_family'] == "RedHat"
+
+
+- hosts: all
+  become: true
+  roles:
+    - base
+
+
+- hosts: db_servers
+  become: true
+  roles:
+    - db_servers
+
+
+- hosts: rdp
+  become: true
+  roles:
+    - rdp
+
+
+- hosts: web_servers
+  become: true
+  roles:
+    - web_servers
