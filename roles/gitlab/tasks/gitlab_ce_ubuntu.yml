@@ -1,0 +1,6 @@
+- name: install gitlab ce dependencies
+  tags: ubuntu, gitlab
+  ansible.builtin.apt:
+    pkg: "{{ gitlab_dependencies_list }}"
+    state: latest
+    update_cache: true
