@@ -51,3 +51,9 @@
   become: true
   roles:
     - web_servers
+
+ - name: Gitlab community instance (from ansible galaxy)
+   become: true
+   hosts: gitlab_ce
+   roles:
+    - srv6d.gitlab.ce

@@ -12,3 +12,6 @@ ansible-playbook --tags ubuntu --ask-become-pass deployment.yml
 - [x] Split into roles to make it modular (See my [roles tiny script](https://github.com/jupiter-commits/Tiny-scripts/blob/36bec2a1913a5b3a07ddb8fe9f63e0f2578dac68/roles.sh) )
 - [ ] Complete missing plays for different machines
 - [ ] Automate instances provisioning
+
+**Dependencies**
+- Install the GitLab collection referenced form ansible galaxy `ansible-galaxy collection install srv6d.gitlab`

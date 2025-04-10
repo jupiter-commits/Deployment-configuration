@@ -1,4 +1,4 @@
-- name: install docker
-  package:
+- name: Install docker
+  ansible.builtin.package:
     name: docker
-    state: latest
+    state: present
