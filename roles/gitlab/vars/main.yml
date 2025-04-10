@@ -1,8 +1,0 @@
----
-gitlab_dependencies_list:
-  - curl
-  - openssh-server
-  - ca-certificates
-  - tzdata
-  - perl
-  - postfix
