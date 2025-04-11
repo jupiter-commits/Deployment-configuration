@@ -64,3 +64,6 @@
   hosts: gitlab_runners
   roles:
     - srv6d.gitlab.runner
+  vars:
+    gitlab_runner_ci_server_url: "{{ gitlab_runner_url }}"
+    gitlab_runner_registration_token: "{{ gitlab_token }}"
