@@ -58,4 +58,9 @@
   roles:
     - srv6d.gitlab.ce
   vars:
-    gitlab_external_url: "https://git.example.com"
+    gitlab_external_url: "{{ gitlab_url }}"
+
+- name: Gitlab runners (from ansible galaxy)
+  hosts: gitlab_runners
+  roles:
+    - srv6d.gitlab.runner
