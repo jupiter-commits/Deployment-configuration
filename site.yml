@@ -52,8 +52,18 @@
   roles:
     - web_servers
 
- - name: Gitlab community instance (from ansible galaxy)
-   become: true
-   hosts: gitlab_ce
-   roles:
+- name: Gitlab community instance (from ansible galaxy)
+  become: true
+  hosts: gitlab_ce
+  roles:
     - srv6d.gitlab.ce
+  vars:
+    gitlab_external_url: "{{ gitlab_url }}"
+
+- name: Gitlab runners (from ansible galaxy)
+  hosts: gitlab_runners
+  roles:
+    - srv6d.gitlab.runner
+  vars:
+    gitlab_runner_ci_server_url: "{{ gitlab_runner_url }}"
+    gitlab_runner_registration_token: "{{ gitlab_token }}"
