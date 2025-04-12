@@ -1,0 +1,92 @@
+---
+
+web_nginx_ubuntu:
+  hosts:
+    nginx1:
+      ansible_host: 10.16.10.11
+    nginx2:
+      ansible_host: 10.16.10.12
+
+web_nginx_rocky:
+  hosts:
+    nginx3:
+      ansible_host: 10.16.10.13
+
+web_nginx:
+  children:
+    web_nginx_ubuntu:
+    web_nginx_rocky:
+
+web_apache:
+  hosts:
+    apache1:
+      ansible_host: 10.16.10.14
+  vars:
+    apache_root: /var/www/html/
+
+web_servers:
+  children:
+    web_nginx:
+    web_apache:
+
+gitlab_ce:
+  hosts:
+    gitlab_instance:
+      ansible_host: 10.16.10.15
+
+gitlab_runners:
+  hosts:
+    gitlab_runner1:
+      ansible_host: 10.16.10.16
+
+gitlab:
+  children:
+    gitlab_ce:
+    gitlab_runners:
+
+db_servers:
+  hosts:
+    dbms_main:
+      ansible_host: 10.16.10.17
+    dbms_replica1:
+      ansible_host: 10.16.10.18
+
+users_rdp:
+  hosts:
+    ubuntu_developer1:
+      ansible_host: 10.16.10.19
+
+rocky:
+  children:
+    web_nginx_rocky:
+    db_servers:
+    gitlab:
+  vars:
+    postgres_package: postgresql-server
+
+ubuntu:
+  children:
+    web_nginx_ubuntu:
+  vars:
+    postgres_package: postgresql
+
+linux:
+  children:
+    web_servers:
+    db_servers:
+    rocky:
+    ubuntu:
+
+network_firewalls:
+  hosts:
+    perimeter_firewall:
+      ansible_host: 10.16.10.1
+    internal_firewall:
+      ansible_host: 10.16.10.6
+  vars:
+    ansible_user: server_user
+
+main_site:
+  children:
+    linux:
+    network_firewalls:
