@@ -1,6 +1,0 @@
-- name: Enable rdp service
-  tags: ubuntu, rdp
-  ansible.builtin.service:
-    name: anydesk
-    state: started
-    enabled: true

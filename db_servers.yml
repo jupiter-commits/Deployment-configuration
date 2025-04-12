@@ -1,0 +1,14 @@
+---
+- name: RDP access play
+  hosts: db_servers
+  become: true
+
+  tasks:
+  # distribution independent
+    - name: Install postgres
+      tags: ubuntu, rocky, postgres, db
+      ansible.builtin.package:
+        name:
+          - "{{ postgres_package }}"
+        state: present
+        update_cache: true

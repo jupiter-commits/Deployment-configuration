@@ -1,8 +1,0 @@
-# distribution independent
-- name: Install postgres
-  tags: ubuntu, rocky, postgres, db
-  ansible.builtin.package:
-    name:
-      - "{{ postgres_package }}"
-    state: present
-    update_cache: true

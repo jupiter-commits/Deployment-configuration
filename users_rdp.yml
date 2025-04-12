@@ -1,0 +1,17 @@
+---
+- name: RDP access play
+  hosts: users_rdp
+  become: true
+
+  tasks:
+    - name: Enable rdp service
+      tags: ubuntu, rdp
+      ansible.builtin.service:
+        name: anydesk
+        state: started
+        enabled: true
+
+    - name: Install docker
+      ansible.builtin.package:
+        name: docker
+        state: present

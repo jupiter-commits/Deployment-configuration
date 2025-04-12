@@ -25,32 +25,18 @@
       when: ansible_facts['os_family'] == "RedHat"
 
 
-- name: Base play
-  hosts: all
-  become: true
-  roles:
-    - base
+- name: Configure developer system
+  import_playbook: users_rdp.yml
 
-
-- name: Databases play
-  hosts: db_servers
-  become: true
-  roles:
-    - db_servers
-
-
-- name: RDP access play
-  hosts: rdp
-  become: true
-  roles:
-    - rdp
+- name: Install database
+  import_playbook: db_servers.yml
 
 
 - name: Web servers play
   hosts: web_servers
   become: true
   roles:
-    - web_servers
+    - web_nginx
 
 - name: Gitlab community instance (from ansible galaxy)
   become: true
@@ -67,3 +53,14 @@
   vars:
     gitlab_runner_ci_server_url: "{{ gitlab_runner_url }}"
     gitlab_runner_registration_token: "{{ gitlab_token }}"
+
+- name: Linux host firewalls
+  hosts: web_servers
+  roles:
+    - linux_firewalls
+
+- name: Apache HTTP server testing environment
+  hosts: web_servers
+  become: true
+  roles:
+    - web_apache
