@@ -1,4 +1,13 @@
-- name: make sure firewalld is installed
-  package:
+- name: Make sure firewalld is installed
+  tags: firewalls , rocky
+  ansible.builtin.package:
     name: firewalld
-    state: latest
+    state: present
+
+- name: Permanently enable http service
+  ansible.posix.firewalld:
+    service: https
+    state: enabled
+    permanent: true
+    immediate: true
+    offline: true

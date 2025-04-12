@@ -1,0 +1,24 @@
+- name: Make sure UFW is installed
+  tags: firewalls , ubuntu
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Rate-limit ssh port to block brute force attacks
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Allow SSH access from specified IP
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    port: '22'
+    from_ip: 10.16.10.19
+
+- name: Allow access to port 80 to serve http websites
+  community.general.ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
