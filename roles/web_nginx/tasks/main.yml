@@ -1,0 +1,31 @@
+- name: Install nginx
+  tags: ubuntu, rocky, postgres, db
+  ansible.builtin.package:
+    name:
+      - "{{ nginx_package }}"
+    state: present
+    update_cache: true
+
+- name: Template a file to /etc/nginx/nginx.conf
+  ansible.builtin.template:
+    src: nginx_{{ nginx_deployment }}.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: bin
+    group: wheel
+    mode: '0644'
+
+- name: Copy file with owner and permission, using symbolic representation
+  ansible.builtin.copy:
+    src: files/404
+    dest: "{{ nginx_root }}"
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
+    mode: u=rw,g=r,o=r
+
+- name: Recursively change ownership of nginx root directory
+  ansible.builtin.file:
+    path: "{{ nginx_root }}"
+    state: directory
+    recurse: true
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"

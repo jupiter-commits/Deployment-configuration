@@ -1,0 +1,8 @@
+nginx_deployment: a
+
+# or nginx (user)
+nginx_user: www-data
+nginx_cpu_cores: 4
+nginx_port: 80
+nginx_server_name: example.com
+nginx_root: /var/www//html

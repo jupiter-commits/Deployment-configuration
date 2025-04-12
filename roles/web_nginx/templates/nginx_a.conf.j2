@@ -1,0 +1,31 @@
+user {{ nginx_user }};
+
+worker_processes {{ nginx_cpu_cores }};
+
+
+events {
+  worker_connections 8000;
+}
+
+
+# This is only used when you don't override it on a `server` level
+# Default: logs/error.log error
+# https://nginx.org/en/docs/ngx_core_module.html#error_log
+error_log /var/log/nginx/error.log warn;
+access_log /var/log/nginx/access.log main;
+
+http {
+
+}
+
+server {
+  listen {{ nginx_port }};
+  server_name {{ nginx_server_name }};
+  root {{ nginx_root }};
+  index index.html;
+}
+
+error_page 404 /404.html;
+location = /404.html {
+  root {{ nginx_root }};
+}
