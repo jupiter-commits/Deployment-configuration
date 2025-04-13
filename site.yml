@@ -33,7 +33,7 @@
 
 
 - name: Web servers play
-  hosts: web_servers
+  hosts: web_nginx
   become: true
   roles:
     - web_nginx
@@ -60,7 +60,7 @@
     - linux_firewalls
 
 - name: Apache HTTP server testing environment
-  hosts: web_servers
+  hosts: web_apache
   become: true
   roles:
     - web_apache
