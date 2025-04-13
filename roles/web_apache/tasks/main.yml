@@ -1,5 +1,28 @@
 ---
 - name: Install Apache web server for RedHat based systems (CentOS)
-  import_tasks: redhat.yml
+  ansible.builtin.import_tasks: redhat.yml
   when:
     - ansible_facts['os_family'] == "RedHat"
+
+- name: Install Apache web server for Debian based systems (Ubuntu)
+  ansible.builtin.import_tasks: debian.yml
+  when:
+    - ansible_facts['os_family'] == "Debian"
+
+
+- name: Set groups and user accounts for Apache web server
+  ansible.builtin.import_tasks: apache_user_management.yml
+
+- name: Copy website files to Apache web server
+  ansible.builtin.copy:
+    src: ./website_apache/
+    dest: "{{ apache_root }}"
+    owner: root
+    group: root:www-pub
+    mode: u=rwx,g=rwx,o=r
+
+- name: Start httpd service (Apache HTTP server)
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true

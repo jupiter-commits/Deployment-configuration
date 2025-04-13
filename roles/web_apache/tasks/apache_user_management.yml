@@ -1,0 +1,23 @@
+- name: Ensure group "www-pub" exists
+  ansible.builtin.group:
+    name: www-pub
+    state: present
+
+- name: Add professors accounts to group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    shell: /bin/bash
+    groups: www-pub,professors
+    append: true
+  loop:
+    - professor1
+    - professor2
+    - professor3
+
+- name: Add a temporary account, expires at end of 2025
+  ansible.builtin.user:
+    name: temporary
+    shell: /bin/bash
+    groups: www-pub
+    create_home: false
+    expires: 1767225600
