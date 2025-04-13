@@ -1,7 +1,9 @@
 ---
-- name: RDP access play
+- name: Database servers play
   hosts: db_servers
   become: true
+  vars:
+    postgresql_community: true
 
   tasks:
   # distribution independent
@@ -12,3 +14,18 @@
           - "{{ postgres_package }}"
         state: present
         update_cache: true
+      when: not postgresql_community
+
+    - name: Create a new database
+      community.postgresql.postgresql_db:
+        name: db_testing
+        comment: testing database
+      when: postgresql_community
+
+    - name: Dump only the schemas matching public
+      community.postgresql.postgresql_db:
+        name: db_testing
+        state: dump
+        target: /tmp/db_dump.sql
+        target_opts: "-n public"
+      when: postgresql_community
