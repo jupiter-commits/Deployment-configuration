@@ -3,6 +3,11 @@
     name: www-pub
     state: present
 
+- name: Ensure group "professors" exists
+  ansible.builtin.group:
+    name: professors
+    state: present
+
 - name: Add professors accounts to group
   ansible.builtin.user:
     name: "{{ item }}"
