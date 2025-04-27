@@ -18,7 +18,7 @@
     src: ./website_apache/
     dest: "{{ apache_root }}"
     owner: root
-    group: root:www-pub
+    group: www-pub
     mode: u=rwx,g=rwx,o=r
 
 - name: Start httpd service (Apache HTTP server)
