@@ -15,14 +15,8 @@
 
 - name: Copy website files to Apache web server
   ansible.builtin.copy:
-    src: ./website_apache/
+    src: website_apache/
     dest: "{{ apache_root }}"
     owner: root
     group: www-pub
     mode: u=rwx,g=rwx,o=r
-
-- name: Start httpd service (Apache HTTP server)
-  ansible.builtin.service:
-    name: httpd
-    state: started
-    enabled: true
