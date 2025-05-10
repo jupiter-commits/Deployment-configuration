@@ -15,7 +15,7 @@ ansible-playbook --tags ubuntu --ask-become-pass deployment.yml
 
 or 
 ``` bash
-ansible-playbook site.yml -i production_inventory.yml --limit web_nginx
+ansible-playbook site.yml -i production_inventory.yml --limit web_nginx --ask-become-pass
 ```
 
 **To Do**:
