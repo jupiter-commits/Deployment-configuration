@@ -56,6 +56,7 @@
 
 - name: Linux host firewalls
   hosts: web_servers
+  become: true
   roles:
     - linux_firewalls
 
@@ -64,3 +65,7 @@
   become: true
   roles:
     - web_apache
+  vars:
+    apache_root: /var/www/html/
+    apache_config_file: "{{ '/etc/httpd/conf/httpd.conf' if ansible_facts['os_family'] == 'RedHat' else '/etc/apache/apache2.conf' }}"
+    apache_userdir_file: "{{ '/etc/httpd/conf.d/userdir.conf' }}"
