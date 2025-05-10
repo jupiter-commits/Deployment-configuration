@@ -20,3 +20,21 @@
     owner: root
     group: www-pub
     mode: u=rwx,g=rwx,o=r
+
+- name: Allow user directories
+  ansible.builtin.lineinfile:
+    path: "{{ apache_config_file }}"
+    regexp: '^\s*UserDir'
+    line: UserDir public_html
+
+- name: Configuration for user directories
+  ansible.builtin.lineinfile:
+    path: "{{ apache_userdir_file }}"
+    regexp: '^\s*UserDir'
+    line: UserDir enabled
+
+- name: Start httpd service (Apache HTTP server)
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
